@@ -1,4 +1,5 @@
 import requests
+import json as complexjson
 
 
 class RestClient():
@@ -29,8 +30,13 @@ class RestClient():
         if method == "POST":
             return self.session.post(url, data, json, **kwargs)
         if method == "PUT":
+            if json:
+                # PUT 和 PATCH 中没有提供直接使用json参数的方法，因此需要用data来传入
+                data = complexjson.dumps(json)
             return self.session.put(url, data, **kwargs)
         if method == "DELETE":
             return self.session.delete(url, **kwargs)
         if method == "PATCH":
+            if json:
+                data = complexjson.dump(json)
             return self.session.patch(url, data, **kwargs)
