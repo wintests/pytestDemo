@@ -28,7 +28,7 @@ class RestClient():
         if method == "GET":
             return self.session.get(url, **kwargs)
         if method == "POST":
-            return self.session.post(url, data, json, **kwargs)
+            return requests.post(url, data, json, **kwargs)
         if method == "PUT":
             if json:
                 # PUT 和 PATCH 中没有提供直接使用json参数的方法，因此需要用data来传入

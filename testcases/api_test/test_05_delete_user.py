@@ -2,11 +2,13 @@ import pytest
 from operation.user import delete_user
 
 
-def test_delete_user(login_fixture, insert_delete_user):
-    username = login_fixture.get("login_info").get("username")
-    token = login_fixture.get("login_info").get("token")
-    result = delete_user(7, username, token)
+@pytest.mark.usefixtures("insert_delete_user")
+def test_delete_user(login_fixture):
+    user_info = login_fixture
+    admin_user = user_info.get("login_info").get("username")
+    token = user_info.get("login_info").get("token")
+    result = delete_user("test", admin_user, token)
     assert result.success is True, result.error
 
 if __name__ == '__main__':
-    pytest.main(["-q", "-s", "test_04_update_user.py"])
+    pytest.main(["-q", "-s", "test_05_delete_user.py"])

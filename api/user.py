@@ -1,5 +1,5 @@
 from core.rest_client import RestClient
-from config.settings import api_root_url
+from config.setting import api_root_url
 
 
 class User(RestClient):
@@ -22,8 +22,8 @@ class User(RestClient):
     def update(self, user_id, **kwargs):
         return self.put("/update/user/{}".format(user_id), **kwargs)
 
-    def delete(self, user_id, **kwargs):
-        return self.post("/delete/user/{}".format(user_id), **kwargs)
+    def delete(self, name, **kwargs):
+        return self.post("/delete/user/{}".format(name), **kwargs)
 
 
 user = User(api_root_url)

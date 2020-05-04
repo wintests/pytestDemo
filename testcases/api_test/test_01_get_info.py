@@ -9,7 +9,7 @@ def test_get_all_user_info():
 
 
 def test_get_get_one_user_info():
-    result = get_one_user_info("wintest3")
+    result = get_one_user_info("wintest4")
     # print(result.__dict__)
     assert result.success is True, result.error
 
