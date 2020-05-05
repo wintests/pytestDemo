@@ -1,6 +1,7 @@
 import pymysql
 import os
 from common.read_data import data
+from common.logger import logger
 
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 data_file_path = os.path.join(BASE_PATH, "config", "setting.ini")
@@ -49,7 +50,7 @@ class MysqlDb():
             # 提交事务
             self.conn.commit()
         except Exception as e:
-            print("操作出现错误：{}".format(e))
+            logger.info("操作MySQL出现错误，错误原因：{}".format(e))
             # 回滚所有更改
             self.conn.rollback()
 

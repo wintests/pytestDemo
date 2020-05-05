@@ -32,5 +32,5 @@ test_update_user:
 test_delete_user:
   # 删除的用户名,期望结果,期望返回码,期望返回信息
   # username, except_result, except_code, except_msg
-  - ["test", True, 0, "删除用户信息成功"]
+  - ["测试test", True, 0, "删除用户信息成功"]
   - ["wintest3", False, 3006, "该用户不允许删除"]
