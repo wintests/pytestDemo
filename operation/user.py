@@ -10,6 +10,7 @@ def get_all_user_info():
         result.success = True
     else:
         result.error = "接口返回码是 【 {} 】, 返回信息：{} ".format(res.json()["code"], res.json()["msg"])
+    result.msg = res.json()["msg"]
     result.response = res
     return result
 
@@ -17,12 +18,12 @@ def get_all_user_info():
 def get_one_user_info(username):
     result = ResultBase()
     res = user.list_one_user(username)
-    print("返回结果：{}".format(res.text))
     result.success = False
     if res.json()["code"] == 0:
         result.success = True
     else:
-        result.error = "接口返回码是 【 {} 】, 返回信息：{} ".format(res.json()["code"], res.json()["msg"])
+        result.error = "查询用户 ==>> 接口返回码是 【 {} 】, 返回信息：{} ".format(res.json()["code"], res.json()["msg"])
+    result.msg = res.json()["msg"]
     result.response = res
     return result
 
@@ -40,12 +41,12 @@ def register_user(username, password, telephone, sex="", address=""):
         "Content-Type": "application/json"
     }
     res = user.register(json=json_data, headers=header)
-    print("返回结果：{}".format(res.text))
     result.success = False
     if res.json()["code"] == 0:
         result.success = True
     else:
         result.error = "接口返回码是 【 {} 】, 返回信息：{} ".format(res.json()["code"], res.json()["msg"])
+    result.msg = res.json()["msg"]
     result.response = res
     return result
 
@@ -60,13 +61,13 @@ def login_user(username, password):
         "Content-Type": "application/x-www-form-urlencoded"
     }
     res = user.login(data=payload, headers=header)
-    print("返回结果：{}".format(res.text))
     result.success = False
     if res.json()["code"] == 0:
         result.success = True
+        result.token = res.json()["login_info"]["token"]
     else:
         result.error = "接口返回码是 【 {} 】, 返回信息：{} ".format(res.json()["code"], res.json()["msg"])
-    result.token = res.json()["login_info"]["token"]
+    result.msg = res.json()["msg"]
     result.response = res
     return result
 
@@ -85,12 +86,12 @@ def update_user(id, admin_user, password, telephone, token, sex="", address=""):
         "address": address
     }
     res = user.update(id, json=json_data, headers=header)
-    print("返回结果：{}".format(res.text))
     result.success = False
     if res.json()["code"] == 0:
         result.success = True
     else:
         result.error = "接口返回码是 【 {} 】, 返回信息：{} ".format(res.json()["code"], res.json()["msg"])
+    result.msg = res.json()["msg"]
     result.response = res
     return result
 
@@ -105,11 +106,11 @@ def delete_user(username, admin_user, token):
         "Content-Type": "application/json"
     }
     res = user.delete(username, json=json_data, headers=header)
-    print("返回结果：{}".format(res.text))
     result.success = False
     if res.json()["code"] == 0:
         result.success = True
     else:
         result.error = "接口返回码是 【 {} 】, 返回信息：{} ".format(res.json()["code"], res.json()["msg"])
+    result.msg = res.json()["msg"]
     result.response = res
     return result

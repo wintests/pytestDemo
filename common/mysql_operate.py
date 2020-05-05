@@ -1,21 +1,29 @@
 import pymysql
-from config.setting import MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWD, MYSQL_DB
+import os
+from common.read_data import data
+
+BASE_PATH = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+data_file_path = os.path.join(BASE_PATH, "config", "setting.ini")
+data = data.load_ini(data_file_path)["mysql"]
+
+DB_CONF = {
+    "host": data["MYSQL_HOST"],
+    "port": int(data["MYSQL_PORT"]),
+    "user": data["MYSQL_USER"],
+    "password": data["MYSQL_PASSWD"],
+    "db": data["MYSQL_DB"]
+}
+
 
 class MysqlDb():
 
-    def __init__(self, host, port, user, passwd, db):
-        # 建立数据库连接
-        self.conn = pymysql.connect(
-            host=host,
-            port=port,
-            user=user,
-            passwd=passwd,
-            db=db
-        )
+    def __init__(self, db_conf=DB_CONF):
+        # 通过字典拆包传递配置信息，建立数据库连接
+        self.conn = pymysql.connect(**db_conf, autocommit=True)
         # 通过 cursor() 创建游标对象，并让查询结果以字典格式输出
         self.cur = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
 
-    def __del__(self): # 对象资源被释放时触发，在对象即将被删除时的最后操作
+    def __del__(self):  # 对象资源被释放时触发，在对象即将被删除时的最后操作
         # 关闭游标
         self.cur.close()
         # 关闭数据库连接
@@ -45,4 +53,5 @@ class MysqlDb():
             # 回滚所有更改
             self.conn.rollback()
 
-db = MysqlDb(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWD, MYSQL_DB)
+
+db = MysqlDb(DB_CONF)

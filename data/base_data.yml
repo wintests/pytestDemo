@@ -1,0 +1,10 @@
+init_admin_user:
+  username: "wintest"
+  password: "123456"
+
+init_sql:
+  insert_delete_user:
+    - "INSERT INTO user(username, password, role, sex, telephone, address) VALUES('test', '123456', '1', '1', '13488888888', '北京市海淀区')"
+    - "DELETE FROM user WHERE username = 'test'"
+  delete_register_user: "DELETE FROM user WHERE username = '测试test'"
+  update_user_telephone: "UPDATE user SET telephone = '13500010004' WHERE id = 4"

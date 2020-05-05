@@ -1,0 +1,36 @@
+test_get_all_user_info:
+  # 期望结果,期望返回码,期望返回信息
+  # except_result, except_code, except_msg
+  - [True, 0, "查询成功"]
+
+test_get_get_one_user_info:
+  # 用户名,期望结果,期望返回码,期望返回信息
+  # username, except_result, except_code, except_msg
+  - ["wintest4", True, 0, "查询成功"]
+  - ["wintest1111", False, "1004", "查不到相关用户"]
+
+test_register_user:
+  # 用户名,密码,手机号,性别,联系地址,期望结果,期望返回码,期望返回信息
+  # username, password, telephone, sex, address, except_result, except_code, except_msg
+  - ["测试test", "123456", "13599999999", "1", "深圳市宝安区", True, 0, "注册成功"]
+  - ["测试test", "123456", "13599999999", "3", "深圳市宝安区", False, 2003, "输入的性别只能是 0(男) 或 1(女)"]
+  - ["wintest4", "123456", "13599999999", "1", "深圳市宝安区", False, 2002, "用户名已存在"]
+
+test_login_user:
+  # 用户名,密码,期望结果,期望返回码,期望返回信息
+  # username, password, except_result, except_code, except_msg
+  - ["wintest", "123456", True, 0, "登录成功"]
+  - ["测试test", "123456", False, 1003, "用户名不存在"]
+
+test_update_user:
+  # 修改的用户ID,新密码,新手机号,新性别,新联系地址,期望结果,期望返回码,期望返回信息
+  # id, new_password, new_telephone, new_sex, new_address, except_result, except_code, except_msg
+  - [4, "123456", "13500010014", "1", "深圳市宝安区", True, 0, "修改用户信息成功"]
+  - [4, "123456", "1350001001", "1", "深圳市宝安区", False, 4008, "手机号格式不正确"]
+  - [111, "123456", "13500010014", "1", "深圳市宝安区", False, 4005, "用户ID不存在"]
+
+test_delete_user:
+  # 删除的用户名,期望结果,期望返回码,期望返回信息
+  # username, except_result, except_code, except_msg
+  - ["test", True, 0, "删除用户信息成功"]
+  - ["wintest3", False, 3006, "该用户不允许删除"]
